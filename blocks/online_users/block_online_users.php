@@ -59,13 +59,12 @@ class block_online_users extends block_base {
         $params['now'] = $now;
         $params['timefrom'] = $timefrom;
         if ($this->page->course->id == SITEID or $this->page->context->contextlevel < CONTEXT_COURSE) {  // Site-level
-            $sql = "SELECT $userfields, MAX(u.lastaccess) AS lastaccess
+            $sql = "SELECT $userfields, lastaccess
                       FROM {user} u $groupmembers
                      WHERE u.lastaccess > :timefrom
                            AND u.lastaccess <= :now
                            AND u.deleted = 0
                            $groupselect
-                  GROUP BY $userfields
                   ORDER BY lastaccess DESC ";
 
            $csql = "SELECT COUNT(u.id)
